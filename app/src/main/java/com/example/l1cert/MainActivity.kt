@@ -7,7 +7,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -17,6 +22,11 @@ class MainActivity : AppCompatActivity() {
 
     //declare floating action buttons late init
     private lateinit var firebaseAuth: FirebaseAuth
+
+    private lateinit var gso: GoogleSignInOptions
+    private lateinit var gsc : GoogleSignInClient
+//    private lateinit var oneTapClient: SignInClient
+//    private lateinit var signInRequest: BeginSignInRequest
 
     lateinit var btnGoogle: FloatingActionButton
     lateinit var btnFacebook: FloatingActionButton
@@ -44,11 +54,30 @@ class MainActivity : AppCompatActivity() {
 
         firebaseAuth = Firebase.auth
 
+//        GoogleSignin information
+        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .build()
+
+        gsc = GoogleSignIn.getClient(this,gso)
+
+        val account:GoogleSignInAccount?= GoogleSignIn
+            .getLastSignedInAccount(this)
+
+        if(account != null){
+            goToHome()
+        }
+
+
+
+
 
 
         //Click listeners
         btnGoogle.setOnClickListener {
-            Toast.makeText(this, "Google button clicked", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Google button clicked", Toast.LENGTH_SHORT).show()
+            goToSignIn()
+
 
         }
         btnFacebook.setOnClickListener {
@@ -82,6 +111,47 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    private fun goToSignIn() {
+
+        val signInIntent = gsc.signInIntent
+
+        startActivityForResult(signInIntent, 1000)
+
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 1000){
+            val task: Task<GoogleSignInAccount>  = GoogleSignIn
+                .getSignedInAccountFromIntent(data)
+
+            try {
+
+                task.getResult(ApiException::class.java)
+                goToHome()
+
+            } catch (e:java.lang.Exception){
+                Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+            }
+
+
+        }
+
+
+
+
+
+    }
+
+    private fun goToHome() {
+
+        val intent = Intent(this, LoggedInActivity::class.java)
+        startActivity(intent)
+        finish()
 
 
     }
@@ -109,6 +179,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this , LoggedInActivity::class.java))
         }
     }
+
+
 
 
 }
