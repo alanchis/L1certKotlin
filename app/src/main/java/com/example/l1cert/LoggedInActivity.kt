@@ -44,13 +44,13 @@ class LoggedInActivity : AppCompatActivity() {
 
 
         } else{
-            goSignOut()
+//            goSignOut()
         }
 
 
 
         signOutBtn.setOnClickListener {
-//            signOut()
+            signOut()
             goSignOut()
         }
 

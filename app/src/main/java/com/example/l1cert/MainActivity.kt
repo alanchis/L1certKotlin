@@ -17,6 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.auth.GoogleAuthProvider
 
 class MainActivity : AppCompatActivity() {
 
@@ -56,6 +57,7 @@ class MainActivity : AppCompatActivity() {
 
 //        GoogleSignin information
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
@@ -126,16 +128,39 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == 1000){
-            val task: Task<GoogleSignInAccount>  = GoogleSignIn
-                .getSignedInAccountFromIntent(data)
-
+//            val task: Task<GoogleSignInAccount>  = GoogleSignIn
+//                .getSignedInAccountFromIntent(data)
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
 
-                task.getResult(ApiException::class.java)
-                goToHome()
+                val account = task.getResult(ApiException::class.java)
+
+
+
+                if(account != null){
+                    val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+                    FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener{
+
+                        if(it.isSuccessful){
+
+                            goToHome()
+
+                        }else{
+
+                        }
+                    }}
+
+
+
+
+
+
+
+
+
 
             } catch (e:java.lang.Exception){
-                Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "${e.message} Error logging in", Toast.LENGTH_SHORT).show()
             }
 
 
@@ -177,6 +202,7 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         if (firebaseAuth.currentUser != null){
             startActivity(Intent(this , LoggedInActivity::class.java))
+
         }
     }
 

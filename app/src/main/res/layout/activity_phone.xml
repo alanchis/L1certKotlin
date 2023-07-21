@@ -1,84 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background"
-    tools:context=".PhoneActivity">
+        >
 
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:gravity="center"
-        android:text="@string/algun_titulo"
-        android:textSize="30sp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/background"
+        tools:context=".MainActivity">
 
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="-16dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:text="@string/algun_titulo"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"
 
+            />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign in with phone"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"
 
-    <EditText
-        android:id="@+id/phoneEditTextNumber"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/edit_text_bg"
-        android:ems="10"
-        android:hint="Type your number"
-        android:inputType="number"
-        android:paddingStart="16dp"
-        android:textColor="@color/white"
-        android:textColorHint="#B6B2B2"
-        app:layout_constraintBottom_toTopOf="@+id/sendOTPBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editTextNumber2" />
+            />
 
-    <Button
-        android:id="@+id/sendOTPBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="55dp"
-        android:layout_marginBottom="40dp"
-        android:text="Send otp"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/editTextNumber2"
-        android:layout_width="50dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="32dp"
-        android:background="@drawable/edit_text_bg"
-        android:ems="10"
-        android:enabled="false"
-        android:inputType="number"
-        android:text="  +52"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/phoneEditTextNumber"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="Login with \nMobile number"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/editTextNumber2"
-        app:layout_constraintStart_toStartOf="@+id/editTextNumber2" />
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="Phone number" />
 
 
 
+        <EditText
+            android:id="@+id/inputPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:ems="10"
+
+            android:inputType="phone"
+            android:autofillHints="" />
+
+        <Button
+            android:id="@+id/sendOTPBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="18sp"
+            android:text="Send OTP"
+            tools:ignore="VisualLintButtonSize" />
+
+        <TextView
+            android:id="@+id/tv_OTP"
+            android:layout_marginTop="130dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="20sp"
+            android:text="Validate OTP" />
+
+        <EditText
+            android:id="@+id/inputverifiedOTP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:inputType="number"
+            android:autofillHints="" />
+
+        <Button
+            android:id="@+id/verifyBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="10dp"
+            android:text="Verify"
+            android:textSize="18sp"
+            tools:ignore="VisualLintButtonSize" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+
+
+</layout>
